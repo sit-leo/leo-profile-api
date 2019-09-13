@@ -55,7 +55,7 @@ jobs:
             sudo docker container rm -f leo.profile || true && \
             sudo docker container run --name leo.profile \
               --env-file /app/env/leo.profile.env \
-              --rm -ditp 8084:8080 imgrbs/sit-profile-api'
+              --rm -ditp 8084:8080 imgrbs/sit-leo-profile-api'
     - run:
         name: Sent Line Notification
         command: $NOTIFY_WORKFLOW_SUCCESS
