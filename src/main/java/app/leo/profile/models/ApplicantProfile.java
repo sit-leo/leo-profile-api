@@ -24,6 +24,7 @@ public class ApplicantProfile implements Profile {
     @JoinColumn(name = "education_id",referencedColumnName = "id")
     private Education education;
 
+    @ElementCollection
     private List<String> skills;
 
     @CreationTimestamp
