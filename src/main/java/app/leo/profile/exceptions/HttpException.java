@@ -1,4 +1,4 @@
-package app.leo.profile.exception;
+package app.leo.profile.exceptions;
 
 public class HttpException extends RuntimeException  {
     public HttpException() {

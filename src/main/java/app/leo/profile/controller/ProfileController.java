@@ -1,18 +1,23 @@
 package app.leo.profile.controller;
 
-import app.leo.profile.dto.ApplicantProfileDTO;
-import app.leo.profile.dto.GetProfileRequest;
-import app.leo.profile.dto.RecruiterProfileDTO;
-import app.leo.profile.exception.UserNotExistException;
-import app.leo.profile.models.ApplicantProfile;
-import app.leo.profile.models.Profile;
-import app.leo.profile.models.RecruiterProfile;
-import app.leo.profile.service.ProfileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RestController;
+
+import app.leo.profile.dto.ApplicantProfileDTO;
+import app.leo.profile.dto.RecruiterProfileDTO;
+import app.leo.profile.dto.User;
+import app.leo.profile.exceptions.UserNotExistException;
+import app.leo.profile.models.ApplicantProfile;
+import app.leo.profile.models.Profile;
+import app.leo.profile.models.RecruiterProfile;
+import app.leo.profile.service.ProfileService;
 
 @RestController
 public class ProfileController {
@@ -54,7 +59,7 @@ public class ProfileController {
     }
 
     @GetMapping("/profile")
-    public  ResponseEntity<Profile> getProfile(@RequestBody GetProfileRequest getProfileRequest){
-        return new ResponseEntity<>(profileService.getProfile(getProfileRequest.getId(),getProfileRequest.getRole()),HttpStatus.OK);
+    public  ResponseEntity<Profile> getProfile(@RequestAttribute(name ="user") User user){
+        return new ResponseEntity<>(profileService.getProfile(user.getId(),user.getRole()),HttpStatus.OK);
     }
 }

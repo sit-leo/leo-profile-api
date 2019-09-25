@@ -1,13 +1,14 @@
 package app.leo.profile.service;
 
-import app.leo.profile.exception.RoleNotExistException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import app.leo.profile.exceptions.RoleNotExistException;
 import app.leo.profile.models.ApplicantProfile;
 import app.leo.profile.models.Profile;
 import app.leo.profile.models.RecruiterProfile;
 import app.leo.profile.repository.ApplicantProfileRepository;
 import app.leo.profile.repository.RecruiterProfileRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class ProfileService {

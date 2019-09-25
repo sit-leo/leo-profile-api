@@ -1,4 +1,4 @@
-package app.leo.profile.exception;
+package app.leo.profile.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

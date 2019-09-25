@@ -1,10 +1,10 @@
-package app.leo.profile.exception;
+package app.leo.profile.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class UserNotExistException extends HttpException{
+public class UserNotExistException extends HttpException {
     public UserNotExistException(String message) {
         super(message);
     }
