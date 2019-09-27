@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class Education {
@@ -18,8 +18,8 @@ public class Education {
     private String gpax;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "applicant_profile_id")
-    @JsonIgnore
+    @JoinColumn(name = "applicant_id")
+    @JsonBackReference
     private ApplicantProfile applicantProfile;
 
     public long getId() {

@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class ApplicantProfile implements Profile {
 
@@ -28,9 +30,9 @@ public class ApplicantProfile implements Profile {
 
     @OneToMany(
         mappedBy = "applicantProfile",
-        cascade = CascadeType.ALL,
-        orphanRemoval = true
+        cascade = CascadeType.ALL
     )
+    @JsonManagedReference
     private List<Education> educations;
 
     @ElementCollection
