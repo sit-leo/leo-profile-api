@@ -1,8 +1,10 @@
 package app.leo.profile.models;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Education {
@@ -13,7 +15,8 @@ public class Education {
     private String major;
     private String gpax;
 
-    @OneToOne(mappedBy = "education")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "applicant_profile_id")
     private ApplicantProfile applicantProfile;
 
     public long getId() {

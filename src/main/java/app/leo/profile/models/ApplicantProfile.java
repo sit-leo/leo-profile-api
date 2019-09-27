@@ -1,11 +1,17 @@
 package app.leo.profile.models;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.LastModifiedDate;
-
-import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
 public class ApplicantProfile implements Profile {
@@ -20,9 +26,12 @@ public class ApplicantProfile implements Profile {
     private String telNo;
     private String experiences;
 
-    @OneToOne
-    @JoinColumn(name = "education_id",referencedColumnName = "id")
-    private Education education;
+    @OneToMany(
+        mappedBy = "applicantProfile",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+    )
+    private List<Education> educations;
 
     @ElementCollection
     private List<String> skills;
@@ -81,12 +90,12 @@ public class ApplicantProfile implements Profile {
         this.experiences = experiences;
     }
 
-    public Education getEducation() {
-        return education;
+    public List<Education> getEducations() {
+        return educations;
     }
 
-    public void setEducation(Education education) {
-        this.education = education;
+    public void setEducations(List<Education> educations) {
+        this.educations = educations;
     }
 
     public List<String> getSkills() {
