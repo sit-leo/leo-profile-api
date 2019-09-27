@@ -1,5 +1,7 @@
 package app.leo.profile.controller;
 
+import javax.validation.Valid;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.leo.profile.dto.ApplicantProfileDTO;
@@ -35,14 +38,14 @@ public class ProfileController {
     }
 
     @PostMapping("/profile/recruiter")
-    public ResponseEntity<RecruiterProfile> saveRecruiterProfile(RecruiterProfileDTO recruiterProfileDTO){
+    public ResponseEntity<RecruiterProfile> saveRecruiterProfile(@Valid @RequestBody RecruiterProfileDTO recruiterProfileDTO){
         RecruiterProfile recruiterProfile = modelMapper.map(recruiterProfileDTO,RecruiterProfile.class);
         return new ResponseEntity<>(profileService.saveRecruiterProfile(recruiterProfile),HttpStatus.ACCEPTED);
     }
 
     @PutMapping("/profile/applicant")
-    public ResponseEntity<ApplicantProfile> updateApplicantProfile(ApplicantProfile applicantProfileDTO){
-        if(applicantProfileDTO.getApplicantId() ==0){
+    public ResponseEntity<ApplicantProfile> updateApplicantProfile(@Valid @RequestBody ApplicantProfile applicantProfileDTO){
+        if(applicantProfileDTO.getApplicantId() == 0){
            throw new UserNotExistException("This profile does not exist");
         }
         ApplicantProfile applicantProfile = modelMapper.map(applicantProfileDTO,ApplicantProfile.class);
