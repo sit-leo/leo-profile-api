@@ -6,6 +6,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Education {
     @Id
@@ -17,6 +19,7 @@ public class Education {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "applicant_profile_id")
+    @JsonIgnore
     private ApplicantProfile applicantProfile;
 
     public long getId() {
