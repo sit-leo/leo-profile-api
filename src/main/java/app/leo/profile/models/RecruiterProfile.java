@@ -1,12 +1,13 @@
 package app.leo.profile.models;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.LastModifiedDate;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.sql.Timestamp;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
 public class RecruiterProfile implements Profile{
@@ -16,6 +17,8 @@ public class RecruiterProfile implements Profile{
 
     private String name;
     private String description;
+    private String email;
+    private String telNo;
     @CreationTimestamp
     private Timestamp createAt;
     @LastModifiedDate
@@ -24,10 +27,11 @@ public class RecruiterProfile implements Profile{
     public RecruiterProfile() {
     }
 
-    public RecruiterProfile(long recruiterId, String name, String description) {
-        this.recruiterId = recruiterId;
+    public RecruiterProfile(String name, String description, String email, String telNo) {
         this.name = name;
         this.description = description;
+        this.email = email;
+        this.telNo = telNo;
     }
 
     public long getRecruiterId() {
@@ -68,5 +72,21 @@ public class RecruiterProfile implements Profile{
 
     public void setUpdateAt(Timestamp updateAt) {
         this.updateAt = updateAt;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelNo() {
+        return telNo;
+    }
+
+    public void setTelNo(String telNo) {
+        this.telNo = telNo;
     }
 }
