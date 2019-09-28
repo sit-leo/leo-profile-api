@@ -19,6 +19,7 @@ public class RecruiterProfile implements Profile{
     private String description;
     private String email;
     private String telNo;
+    private String location;
     @CreationTimestamp
     private Timestamp createAt;
     @LastModifiedDate
@@ -27,11 +28,30 @@ public class RecruiterProfile implements Profile{
     public RecruiterProfile() {
     }
 
-    public RecruiterProfile(String name, String description, String email, String telNo) {
+    public RecruiterProfile(String name, String description, String email) {
+        this.name = name;
+        this.description = description;
+        this.email = email;
+    }
+
+    public RecruiterProfile(String name, String description, String email, String telNo, String location) {
         this.name = name;
         this.description = description;
         this.email = email;
         this.telNo = telNo;
+        this.location = location;
+    }
+
+    public RecruiterProfile(long recruiterId, String name, String description, String email, String telNo, String location,
+        Timestamp createAt, Timestamp updateAt) {
+        this.recruiterId = recruiterId;
+        this.name = name;
+        this.description = description;
+        this.email = email;
+        this.telNo = telNo;
+        this.location = location;
+        this.createAt = createAt;
+        this.updateAt = updateAt;
     }
 
     public long getRecruiterId() {
@@ -88,5 +108,13 @@ public class RecruiterProfile implements Profile{
 
     public void setTelNo(String telNo) {
         this.telNo = telNo;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }
