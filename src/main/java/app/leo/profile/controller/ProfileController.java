@@ -32,7 +32,7 @@ public class ProfileController {
     private ModelMapper modelMapper;
 
     @PostMapping("/profile/applicant")
-    public ResponseEntity<ApplicantProfile> saveApplicantProfile(ApplicantProfileDTO applicantProfileDTO){
+    public ResponseEntity<ApplicantProfile> saveApplicantProfile(@Valid @RequestBody ApplicantProfileDTO applicantProfileDTO){
         ApplicantProfile applicantProfile = modelMapper.map(applicantProfileDTO,ApplicantProfile.class);
         return new ResponseEntity<>(profileService.saveApplicantProfile(applicantProfile), HttpStatus.ACCEPTED);
     }
@@ -53,7 +53,7 @@ public class ProfileController {
     }
 
     @PutMapping("/profile/recruiter")
-    public ResponseEntity<RecruiterProfile> updateRecruiterProfile(RecruiterProfileDTO recruiterProfileDTO){
+    public ResponseEntity<RecruiterProfile> updateRecruiterProfile(@Valid @RequestBody RecruiterProfile recruiterProfileDTO){
         if(recruiterProfileDTO.getRecruiterId() ==0){
             throw new UserNotExistException("This profile does not exist");
         }
