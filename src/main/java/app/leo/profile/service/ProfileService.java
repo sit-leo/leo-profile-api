@@ -41,4 +41,12 @@ public class ProfileService {
             return null;
         }
     }
+
+    public RecruiterProfile getRecruiterProfileByUserId(long userId) {
+        return recruiterProfileRepository.findByRecruiterId(userId);
+    }
+
+    public ApplicantProfile getApplicantProfileByUserId(long userId) {
+        return applicantProfileRepository.findByApplicantId(userId);
+    }
 }

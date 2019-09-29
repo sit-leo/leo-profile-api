@@ -6,12 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import app.leo.profile.dto.ApplicantProfileDTO;
 import app.leo.profile.dto.RecruiterProfileDTO;
@@ -64,5 +59,15 @@ public class ProfileController {
     @GetMapping("/profile")
     public  ResponseEntity<Profile> getProfile(@RequestAttribute(name ="user") User user){
         return new ResponseEntity<>(profileService.getProfile(user.getId(),user.getRole()),HttpStatus.OK);
+    }
+
+    @GetMapping("/profile/{userId}/recruiter")
+    public ResponseEntity<RecruiterProfile> getRecruiterProfile(@PathVariable long userId){
+        return new ResponseEntity<>(profileService.getRecruiterProfileByUserId(userId), HttpStatus.OK);
+    }
+
+    @GetMapping("/profile/{userId}/applicant")
+    public ResponseEntity<ApplicantProfile> getApplicantProfile(@PathVariable long userId){
+        return new ResponseEntity<>(profileService.getApplicantProfileByUserId(userId),HttpStatus.OK);
     }
 }
