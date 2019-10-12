@@ -32,13 +32,13 @@ public class DocumentController {
         return new ResponseEntity<>(documentService.uploadDocumentsToS3(files,applicantProfile,1), HttpStatus.OK);
     }
 
-    @GetMapping("/profile/documents")
+    @GetMapping("/profile/files")
     public ResponseEntity<List<S3ObjectInputStream>> getFromS3File(@RequestAttribute("user") User user){
         ApplicantProfile applicantProfile = profileService.getApplicantProfileByUserId(user.getId());
         return new ResponseEntity<>(documentService.getDocumentsByApplicantProfileId(applicantProfile.getApplicantId()),HttpStatus.OK);
     }
 
-    @GetMapping("/profile/documents/name-list")
+    @GetMapping("/profile/documents")
     public ResponseEntity<List<Document>> getDocumentByUserId(@RequestAttribute("user") User user){
         ApplicantProfile applicantProfile = profileService.getApplicantProfileByUserId(user.getId());
         return new ResponseEntity<>(documentService.getDocumentNameListByApplicantProfileId(applicantProfile),HttpStatus.OK);
