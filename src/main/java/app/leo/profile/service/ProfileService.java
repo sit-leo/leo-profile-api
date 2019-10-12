@@ -46,7 +46,11 @@ public class ProfileService {
         return recruiterProfileRepository.findByRecruiterId(userId);
     }
 
-    public ApplicantProfile getApplicantProfileByUserId(long userId) {
+    public ApplicantProfile getApplicantProfileByApplicantId(long userId) {
         return applicantProfileRepository.findByApplicantId(userId);
+    }
+
+    public ApplicantProfile getApplicantProfileByUserId(long userId){
+        return applicantProfileRepository.findByUserId(userId);
     }
 }

@@ -9,4 +9,5 @@ public interface ApplicantProfileRepository extends JpaRepository<ApplicantProfi
 
     ApplicantProfile findByApplicantId(long applicantId);
 
+    ApplicantProfile findByUserId(long userId);
 }

@@ -27,6 +27,7 @@ public class ApplicantProfile implements Profile {
     private String email;
     private String telNo;
     private String experiences;
+    private long userId;
 
     @OneToMany(
         mappedBy = "applicantProfile",
@@ -114,5 +115,13 @@ public class ApplicantProfile implements Profile {
 
     public Timestamp getUpdateAt() {
         return updateAt;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 }

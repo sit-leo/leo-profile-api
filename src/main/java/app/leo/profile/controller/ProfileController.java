@@ -68,6 +68,6 @@ public class ProfileController {
 
     @GetMapping("/profile/{userId}/applicant")
     public ResponseEntity<ApplicantProfile> getApplicantProfile(@PathVariable long userId){
-        return new ResponseEntity<>(profileService.getApplicantProfileByUserId(userId),HttpStatus.OK);
+        return new ResponseEntity<>(profileService.getApplicantProfileByApplicantId(userId),HttpStatus.OK);
     }
 }

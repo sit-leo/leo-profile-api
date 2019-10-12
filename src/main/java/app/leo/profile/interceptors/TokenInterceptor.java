@@ -1,4 +1,4 @@
-package app.leo.matching.interceptors;
+package app.leo.profile.interceptors;
 
 import java.util.Date;
 
@@ -21,6 +21,7 @@ import io.jsonwebtoken.Jwts;
 
 @ComponentScan
 public class TokenInterceptor implements HandlerInterceptor {
+
 	@Value("${jwt.secret}")
 	private String SECRET;
 
@@ -44,10 +45,8 @@ public class TokenInterceptor implements HandlerInterceptor {
 			return false;
 		} else if (!token.startsWith("Bearer") ||token.length() < 7) {
 			return false;
-		}else if(isExpires(token)){
-			return false;
-		}
-		return true;
+		}else
+			return !isExpires(token);
 	}
 
 	private boolean isExpires(String token){
