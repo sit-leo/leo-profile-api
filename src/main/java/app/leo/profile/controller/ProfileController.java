@@ -26,13 +26,13 @@ public class ProfileController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @PostMapping("/profile/applicant")
+    @PostMapping("/profile/applicant/create")
     public ResponseEntity<ApplicantProfile> saveApplicantProfile(@Valid @RequestBody ApplicantProfileDTO applicantProfileDTO){
         ApplicantProfile applicantProfile = modelMapper.map(applicantProfileDTO,ApplicantProfile.class);
         return new ResponseEntity<>(profileService.saveApplicantProfile(applicantProfile), HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/profile/recruiter")
+    @PostMapping("/profile/recruiter/create")
     public ResponseEntity<RecruiterProfile> saveRecruiterProfile(@Valid @RequestBody RecruiterProfileDTO recruiterProfileDTO){
         RecruiterProfile recruiterProfile = modelMapper.map(recruiterProfileDTO,RecruiterProfile.class);
         return new ResponseEntity<>(profileService.saveRecruiterProfile(recruiterProfile),HttpStatus.ACCEPTED);
