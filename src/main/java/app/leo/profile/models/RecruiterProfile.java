@@ -22,6 +22,7 @@ public class RecruiterProfile implements Profile{
     private String email;
     private String telNo;
     private String location;
+    private long userId;
     @CreationTimestamp
     private Timestamp createAt;
     @LastModifiedDate
@@ -98,6 +99,14 @@ public class RecruiterProfile implements Profile{
 
     public String getEmail() {
         return email;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public void setEmail(String email) {
