@@ -3,12 +3,7 @@ package app.leo.profile.models;
 import java.sql.Timestamp;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -20,6 +15,7 @@ public class ApplicantProfile implements Profile {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue
     private long applicantId;
 
     private String firstName;
