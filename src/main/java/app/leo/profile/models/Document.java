@@ -17,7 +17,7 @@ public class Document {
 
     private String fileName;
 
-    private long matchId;
+    private String genaratedFileName;
 
     @ManyToOne
     private ApplicantProfile applicantProfile;
@@ -49,11 +49,11 @@ public class Document {
         this.applicantProfile = applicantProfile;
     }
 
-    public long getMatchId() {
-        return matchId;
+    public String getGenaratedFileName() {
+        return genaratedFileName;
     }
 
-    public void setMatchId(long matchId) {
-        this.matchId = matchId;
+    public void setGenaratedFileName(String genaratedFileName) {
+        this.genaratedFileName = genaratedFileName;
     }
 }

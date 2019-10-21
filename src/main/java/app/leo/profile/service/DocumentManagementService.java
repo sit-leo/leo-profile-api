@@ -13,8 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class DocumentManagementService {
@@ -27,14 +28,14 @@ public class DocumentManagementService {
 
     private Logger logger;
 
-    public List<String> uploadMultipleFiles(List<MultipartFile> files) {
-        List<String> nameList = new ArrayList<>();
+    public Map<String,String> uploadMultipleFiles(List<MultipartFile> files) {
+        Map<String,String> nameList =new HashMap<>();
         if (files != null) {
             files.forEach(multipartFile -> {
                 File file = convertMultiPartFileToFile(multipartFile);
                 String uniqueFileName = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
                 uploadFileToS3bucket(uniqueFileName, file, bucketName);
-                nameList.add(uniqueFileName);
+                nameList.put(multipartFile.getOriginalFilename(),uniqueFileName);
             });
         }
         return nameList;

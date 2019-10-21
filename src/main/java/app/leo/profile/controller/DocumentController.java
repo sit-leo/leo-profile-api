@@ -26,10 +26,9 @@ public class DocumentController {
 
     @PostMapping("/profile/documents")
     public ResponseEntity<List<Document>> uploadMultipleFiles(@ModelAttribute List<MultipartFile> files,
-                                                              @RequestAttribute("user") User user,
-                                                              @RequestAttribute("token") String token){
+                                                              @RequestAttribute("user") User user){
         ApplicantProfile applicantProfile = profileService.getApplicantProfileByUserId(user.getId());
-        return new ResponseEntity<>(documentService.uploadDocumentsToS3(files,applicantProfile,1), HttpStatus.OK);
+        return new ResponseEntity<>(documentService.uploadDocumentsToS3(files,applicantProfile), HttpStatus.OK);
     }
 
     @GetMapping("/profile/files")

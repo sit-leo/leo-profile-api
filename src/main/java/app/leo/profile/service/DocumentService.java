@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class DocumentService {
@@ -24,20 +25,20 @@ public class DocumentService {
         List<Document> documents =  documentRepository.findByApplicantProfileId(applicantProfileId);
         List<S3ObjectInputStream> inputStreams = new ArrayList<>();
         for(Document document:documents){
-            S3ObjectInputStream s3ObjectInputStream = documentManagementService.getObjectInputStream(document.getFileName());
+            S3ObjectInputStream s3ObjectInputStream = documentManagementService.getObjectInputStream(document.getGenaratedFileName());
             inputStreams.add(s3ObjectInputStream);
         }
 
         return inputStreams;
     }
 
-    public List<Document> uploadDocumentsToS3(List<MultipartFile> files, ApplicantProfile applicantProfile,long matchId){
-        List<String> documentList = documentManagementService.uploadMultipleFiles(files);
+    public List<Document> uploadDocumentsToS3(List<MultipartFile> files, ApplicantProfile applicantProfile){
+        Map<String,String> documentList = documentManagementService.uploadMultipleFiles(files);
         List<Document> documents = new ArrayList<>();
-        for(String documentName: documentList){
+        for(Map.Entry<String,String> documentName: documentList.entrySet()){
             Document document  = new Document();
-            document.setFileName(documentName);
-            document.setMatchId(matchId);
+            document.setFileName(documentName.getKey());
+            document.setGenaratedFileName(documentName.getValue());
             document.setApplicantProfile(applicantProfile);
             document = documentRepository.save(document);
             documents.add(document);
