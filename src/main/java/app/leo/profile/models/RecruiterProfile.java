@@ -22,6 +22,7 @@ public class RecruiterProfile implements Profile{
     private String email;
     private String telNo;
     private String location;
+    private String website;
     private long userId;
     @CreationTimestamp
     private Timestamp createAt;
@@ -127,5 +128,13 @@ public class RecruiterProfile implements Profile{
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
     }
 }

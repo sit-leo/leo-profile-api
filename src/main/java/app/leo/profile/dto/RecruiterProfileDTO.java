@@ -8,6 +8,7 @@ public class RecruiterProfileDTO{
     private String email;
     private String telNo;
     private String location;
+    private String website;
     private long userId;
 
     public String getName() {
@@ -56,5 +57,13 @@ public class RecruiterProfileDTO{
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
     }
 }
