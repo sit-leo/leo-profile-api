@@ -1,8 +1,5 @@
 package app.leo.profile.dto;
 
-
-import app.leo.profile.models.Education;
-
 import java.util.List;
 
 public class ApplicantProfileDTO  {
@@ -13,6 +10,7 @@ public class ApplicantProfileDTO  {
     private String email;
     private String telNo;
     private String experiences;
+    private String website;
     private long userId;
     private List<EducationDTO> educations;
     private List<String> skills;
@@ -79,5 +77,13 @@ public class ApplicantProfileDTO  {
 
     public void setSkills(List<String> skills) {
         this.skills = skills;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
     }
 }
