@@ -42,4 +42,10 @@ public class DocumentController {
         ApplicantProfile applicantProfile = profileService.getApplicantProfileByUserId(user.getId());
         return new ResponseEntity<>(documentService.getDocumentNameListByApplicantProfileId(applicantProfile),HttpStatus.OK);
     }
+
+    @GetMapping("/profile/documents/get-in-list")
+    public ResponseEntity<List<Document>> getDocumentFromDocumentList(@RequestParam("idlist") List<Long> documentIdList){
+        List<Document> documents =documentService.getDocumentByIdList(documentIdList);
+        return new ResponseEntity<>(documents,HttpStatus.OK);
+    }
 }

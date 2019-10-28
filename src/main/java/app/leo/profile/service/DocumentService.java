@@ -49,4 +49,8 @@ public class DocumentService {
     public List<Document> getDocumentNameListByApplicantProfileId(ApplicantProfile applicantProfile){
         return documentRepository.findByApplicantProfileId(applicantProfile.getApplicantId());
     }
+
+    public List<Document> getDocumentByIdList(List<Long> documentIdList){
+        return documentRepository.findByIdIn(documentIdList);
+    }
 }
