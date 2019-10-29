@@ -1,5 +1,7 @@
 package app.leo.profile.service;
 
+import app.leo.profile.models.OrganizationProfile;
+import app.leo.profile.repository.OrganizationProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,9 @@ public class ProfileService {
 
     @Autowired
     private RecruiterProfileRepository recruiterProfileRepository;
+
+    @Autowired
+    private OrganizationProfileRepository organizationProfileRepository;
 
     public ApplicantProfile saveApplicantProfile(ApplicantProfile applicantProfile){
         return applicantProfileRepository.save(applicantProfile);
@@ -52,5 +57,9 @@ public class ProfileService {
 
     public ApplicantProfile getApplicantProfileByUserId(long userId){
         return applicantProfileRepository.findByUserId(userId);
+    }
+
+    public OrganizationProfile saveOrganizationProfile(OrganizationProfile organizationProfile){
+        return organizationProfileRepository.save(organizationProfile);
     }
 }

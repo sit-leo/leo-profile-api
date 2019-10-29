@@ -2,6 +2,8 @@ package app.leo.profile.controller;
 
 import javax.validation.Valid;
 
+import app.leo.profile.dto.OrganizationProfileDTO;
+import app.leo.profile.models.OrganizationProfile;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -69,5 +71,11 @@ public class ProfileController {
     @GetMapping("/profile/{userId}/applicant")
     public ResponseEntity<ApplicantProfile> getApplicantProfile(@PathVariable long userId){
         return new ResponseEntity<>(profileService.getApplicantProfileByApplicantId(userId),HttpStatus.OK);
+    }
+
+    @PostMapping("/profile/organizer/create")
+    public ResponseEntity<OrganizationProfile> createOrganizationProfile(@RequestBody OrganizationProfileDTO organizationProfileDTO){
+        OrganizationProfile organizationProfile = modelMapper.map(organizationProfileDTO,OrganizationProfile.class);
+        return new ResponseEntity<>(profileService.saveOrganizationProfile(organizationProfile),HttpStatus.ACCEPTED);
     }
 }
