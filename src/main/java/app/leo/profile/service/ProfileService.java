@@ -12,6 +12,10 @@ import app.leo.profile.models.RecruiterProfile;
 import app.leo.profile.repository.ApplicantProfileRepository;
 import app.leo.profile.repository.RecruiterProfileRepository;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class ProfileService {
 
@@ -59,7 +63,24 @@ public class ProfileService {
         return applicantProfileRepository.findByUserId(userId);
     }
 
+    public OrganizationProfile getOrganizationProfileByUserId(long userId){
+        return organizationProfileRepository.findByUserId(userId);
+    }
     public OrganizationProfile saveOrganizationProfile(OrganizationProfile organizationProfile){
         return organizationProfileRepository.save(organizationProfile);
+    }
+
+    public List<ApplicantProfile> getApplicantProfileList(long[] ids){
+        List<Long> idList = Arrays.stream(ids)
+                            .boxed()
+                            .collect(Collectors.toList());
+        return applicantProfileRepository.findByApplicantIdIn(idList);
+    }
+
+    public List<RecruiterProfile> getRecruiterProfileList(long[] ids){
+        List<Long> idList = Arrays.stream(ids)
+                .boxed()
+                .collect(Collectors.toList());
+        return recruiterProfileRepository.findAllByRecruiterIdIn(idList);
     }
 }

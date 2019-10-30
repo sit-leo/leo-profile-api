@@ -3,6 +3,7 @@ package app.leo.profile.controller;
 import javax.validation.Valid;
 
 import app.leo.profile.dto.OrganizationProfileDTO;
+import app.leo.profile.exceptions.RoleNotExistException;
 import app.leo.profile.models.OrganizationProfile;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ import app.leo.profile.models.ApplicantProfile;
 import app.leo.profile.models.Profile;
 import app.leo.profile.models.RecruiterProfile;
 import app.leo.profile.service.ProfileService;
+
+import java.util.List;
 
 @RestController
 public class ProfileController {
@@ -77,5 +80,34 @@ public class ProfileController {
     public ResponseEntity<OrganizationProfile> createOrganizationProfile(@RequestBody OrganizationProfileDTO organizationProfileDTO){
         OrganizationProfile organizationProfile = modelMapper.map(organizationProfileDTO,OrganizationProfile.class);
         return new ResponseEntity<>(profileService.saveOrganizationProfile(organizationProfile),HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/profile/id/{userId}/{role}")
+    public ResponseEntity<Long> getProfileIdByUserId(@PathVariable String role,@PathVariable long userId){
+        long result;
+        switch (role) {
+            case "applicant":
+                result = profileService.getApplicantProfileByUserId(userId).getApplicantId();
+                break;
+            case "recruiter":
+                result = profileService.getRecruiterProfileByUserId(userId).getRecruiterId();
+                break;
+            case "organization":
+                result = profileService.getOrganizationProfileByUserId(userId).getId();
+                break;
+            default:
+                throw new RoleNotExistException("Your role isn't existed");
+        }
+        return new ResponseEntity<>(result,HttpStatus.OK);
+    }
+
+    @GetMapping("profile/applicants/{ids}")
+    public ResponseEntity<List<ApplicantProfile>> getApplicantListByIds(@PathVariable("ids") long [] ids){
+        return new ResponseEntity<>(profileService.getApplicantProfileList(ids),HttpStatus.OK);
+    }
+
+    @GetMapping("profile/recruiters/{ids}")
+    public ResponseEntity<List<RecruiterProfile>> getRecruiterListByIds(@PathVariable("ids") long [] ids){
+        return new ResponseEntity<>(profileService.getRecruiterProfileList(ids),HttpStatus.OK);
     }
 }
