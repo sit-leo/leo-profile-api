@@ -92,7 +92,7 @@ public class ProfileController {
             case "recruiter":
                 result = profileService.getRecruiterProfileByUserId(userId).getRecruiterId();
                 break;
-            case "organization":
+            case "organizer":
                 result = profileService.getOrganizationProfileByUserId(userId).getId();
                 break;
             default:
