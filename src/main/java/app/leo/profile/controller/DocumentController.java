@@ -7,12 +7,16 @@ import app.leo.profile.service.DocumentManagementService;
 import app.leo.profile.service.DocumentService;
 import app.leo.profile.service.ProfileService;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import com.amazonaws.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 @RestController
@@ -53,8 +57,10 @@ public class DocumentController {
     }
 
     @GetMapping("documents/{fileId}")
-    public ResponseEntity<S3ObjectInputStream> getDocumentByFileId(@PathVariable long fileId){
+    public void getDocumentByFileId(@PathVariable long fileId, HttpServletResponse response) throws IOException {
         Document document = documentService.getDocumentById(fileId);
-        return new ResponseEntity<>(documentManagementService.getObjectInputStream(document.getGenaratedFileName()),HttpStatus.OK);
+        InputStream inputStream = documentManagementService.getInputStream(document.getGenaratedFileName());
+        IOUtils.copy(inputStream, response.getOutputStream());
+        response.flushBuffer();
     }
 }

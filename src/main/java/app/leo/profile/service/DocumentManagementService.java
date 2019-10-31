@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +50,14 @@ public class DocumentManagementService {
     public S3ObjectInputStream getObjectInputStream(String fileName){
         S3Object object = amazonS3Client.getObject(this.bucketName,fileName);
         return object.getObjectContent();
+    }
+
+    public InputStream getInputStream(String fileName){
+        S3Object object = amazonS3Client.getObject(this.bucketName,fileName);
+        return object.getObjectContent();
+    }
+    public S3Object getS3Object(String fileName){
+        return amazonS3Client.getObject(this.bucketName,fileName);
     }
 
     private void deleteFileFromS3bucket(String fileName, String bucketName) {
