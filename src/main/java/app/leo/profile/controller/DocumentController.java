@@ -1,23 +1,33 @@
 package app.leo.profile.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.codec.binary.Base64;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import com.amazonaws.util.IOUtils;
+
 import app.leo.profile.dto.User;
 import app.leo.profile.models.ApplicantProfile;
 import app.leo.profile.models.Document;
 import app.leo.profile.service.DocumentManagementService;
 import app.leo.profile.service.DocumentService;
 import app.leo.profile.service.ProfileService;
-import com.amazonaws.services.s3.model.S3ObjectInputStream;
-import com.amazonaws.util.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
 
 @RestController
 public class DocumentController {
@@ -57,10 +67,13 @@ public class DocumentController {
     }
 
     @GetMapping("documents/{fileId}")
-    public void getDocumentByFileId(@PathVariable long fileId, HttpServletResponse response) throws IOException {
+    public ResponseEntity<String> getDocumentByFileId(@PathVariable long fileId, HttpServletResponse response) throws IOException {
         Document document = documentService.getDocumentById(fileId);
         InputStream inputStream = documentManagementService.getInputStream(document.getGenaratedFileName());
-        IOUtils.copy(inputStream, response.getOutputStream());
-        response.flushBuffer();
+
+        byte[] fileBytes = IOUtils.toByteArray(inputStream);
+        String fileEncoded = Base64.encodeBase64String(fileBytes);
+
+        return new ResponseEntity<>(fileEncoded,HttpStatus.OK);
     }
 }
