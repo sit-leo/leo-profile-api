@@ -53,4 +53,8 @@ public class DocumentService {
     public List<Document> getDocumentByIdList(List<Long> documentIdList){
         return documentRepository.findByIdIn(documentIdList);
     }
+
+    public Document getDocumentById(long id){
+        return documentRepository.findById(id);
+    }
 }

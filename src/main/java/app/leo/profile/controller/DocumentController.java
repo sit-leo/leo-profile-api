@@ -3,6 +3,7 @@ package app.leo.profile.controller;
 import app.leo.profile.dto.User;
 import app.leo.profile.models.ApplicantProfile;
 import app.leo.profile.models.Document;
+import app.leo.profile.service.DocumentManagementService;
 import app.leo.profile.service.DocumentService;
 import app.leo.profile.service.ProfileService;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
@@ -23,6 +24,8 @@ public class DocumentController {
     @Autowired
     private ProfileService profileService;
 
+    @Autowired
+    private DocumentManagementService documentManagementService;
 
     @PostMapping("/profile/documents")
     public ResponseEntity<List<Document>> uploadMultipleFiles(@ModelAttribute List<MultipartFile> files,
@@ -47,5 +50,11 @@ public class DocumentController {
     public ResponseEntity<List<Document>> getDocumentFromDocumentList(@RequestParam("idlist") List<Long> documentIdList){
         List<Document> documents =documentService.getDocumentByIdList(documentIdList);
         return new ResponseEntity<>(documents,HttpStatus.OK);
+    }
+
+    @GetMapping("documents/{fileId}")
+    public ResponseEntity<S3ObjectInputStream> getDocumentByFileId(@PathVariable long fileId){
+        Document document = documentService.getDocumentById(fileId);
+        return new ResponseEntity<>(documentManagementService.getObjectInputStream(document.getGenaratedFileName()),HttpStatus.OK);
     }
 }
