@@ -77,9 +77,9 @@ public class ProfileController {
     }
 
     @PostMapping("/profile/organizer/create")
-    public ResponseEntity<OrganizationProfile> createOrganizationProfile(@RequestBody OrganizationProfileDTO organizationProfileDTO){
+    public ResponseEntity<OrganizationProfileDTO> createOrganizationProfile(@RequestBody OrganizationProfileDTO organizationProfileDTO){
         OrganizationProfile organizationProfile = modelMapper.map(organizationProfileDTO,OrganizationProfile.class);
-        return new ResponseEntity<>(profileService.saveOrganizationProfile(organizationProfile),HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(modelMapper.map(profileService.saveOrganizationProfile(organizationProfile), OrganizationProfileDTO.class),HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/profile/id/{userId}/{role}")
