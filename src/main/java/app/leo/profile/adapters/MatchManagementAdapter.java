@@ -29,4 +29,16 @@ public class MatchManagementAdapter {
         ResponseEntity<IdWrapper> responseEntity = restTemplate.exchange(url, HttpMethod.GET,entity,IdWrapper.class);
         return responseEntity.getBody();
     }
+
+    public IdWrapper getRecruiterInOrgByOrgProfileId(long profileId, String token) {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = matchManagementAPIUrl + "/organization/recruiters/" + profileId;
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", token);
+        headers.add("user-agent",
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
+        HttpEntity<GetTokenRequest> entity = new HttpEntity<>(headers);
+        ResponseEntity<IdWrapper> responseEntity = restTemplate.exchange(url, HttpMethod.GET,entity,IdWrapper.class);
+        return responseEntity.getBody();
+    }
 }

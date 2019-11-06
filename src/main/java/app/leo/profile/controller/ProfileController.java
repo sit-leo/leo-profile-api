@@ -124,4 +124,15 @@ public class ProfileController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("profile/recruiters")
+    public ResponseEntity<List<RecruiterProfileDTO>> getRecruiterWhoAreNotInOrg(@RequestAttribute("user") User user, @RequestAttribute("token") String token){
+        List<RecruiterProfileDTO> response = new ArrayList<>();
+        IdWrapper idWrapper = matchManagementAdapter.getRecruiterInOrgByOrgProfileId(user.getProfileId(),token);
+        List<RecruiterProfile> recruiterProfileList = profileService.getRecruiterProfileListExcludeWhoInOrganization(idWrapper.getIdList());
+        for(RecruiterProfile recruiterProfile:recruiterProfileList){
+            response.add(modelMapper.map(recruiterProfile,RecruiterProfileDTO.class));
+        }
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
 }

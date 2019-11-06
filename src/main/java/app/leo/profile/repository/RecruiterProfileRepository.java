@@ -12,4 +12,6 @@ public interface RecruiterProfileRepository extends JpaRepository<RecruiterProfi
     RecruiterProfile findByRecruiterId(long recruiterId);
 
     List<RecruiterProfile> findAllByRecruiterIdIn(List<Long> ids);
+
+    List<RecruiterProfile> findAllByRecruiterIdNotIn(List<Long> idList);
 }

@@ -89,4 +89,8 @@ public class ProfileService {
     public List<ApplicantProfile> getApplicantProfileListExcludeWhoInList(List<Long> profileIdList) {
         return applicantProfileRepository.findAllByApplicantIdNotIn(profileIdList);
     }
+
+    public List<RecruiterProfile> getRecruiterProfileListExcludeWhoInOrganization(List<Long> idList) {
+        return recruiterProfileRepository.findAllByRecruiterIdNotIn(idList);
+    }
 }
