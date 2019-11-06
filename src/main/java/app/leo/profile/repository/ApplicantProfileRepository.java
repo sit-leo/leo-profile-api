@@ -1,5 +1,6 @@
 package app.leo.profile.repository;
 
+import app.leo.profile.dto.IdWrapper;
 import app.leo.profile.models.ApplicantProfile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -14,4 +15,6 @@ public interface ApplicantProfileRepository extends JpaRepository<ApplicantProfi
     ApplicantProfile findByUserId(long userId);
 
     List<ApplicantProfile> findByApplicantIdIn(List<Long> applicantIdList);
+
+    List<ApplicantProfile> findAllByApplicantIdNotIn(List<Long> profileIdList);
 }

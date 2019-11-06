@@ -85,4 +85,8 @@ public class ProfileService {
                 .collect(Collectors.toList());
         return recruiterProfileRepository.findAllByRecruiterIdIn(idList);
     }
+
+    public List<ApplicantProfile> getApplicantProfileListExcludeWhoInList(List<Long> profileIdList) {
+        return applicantProfileRepository.findAllByApplicantIdNotIn(profileIdList);
+    }
 }
