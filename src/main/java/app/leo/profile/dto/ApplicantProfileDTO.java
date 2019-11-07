@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ApplicantProfileDTO  {
 
-
+    private long applicantId;
     private String firstName;
     private String lastName;
     private String email;
@@ -85,5 +85,13 @@ public class ApplicantProfileDTO  {
 
     public void setWebsite(String website) {
         this.website = website;
+    }
+
+    public long getApplicantId() {
+        return applicantId;
+    }
+
+    public void setApplicantId(long applicantId) {
+        this.applicantId = applicantId;
     }
 }
