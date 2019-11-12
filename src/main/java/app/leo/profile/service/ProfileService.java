@@ -101,4 +101,8 @@ public class ProfileService {
     public List<RecruiterProfile> getRecruiterProfileList() {
         return recruiterProfileRepository.findAll();
     }
+
+    public List<OrganizationProfile> getOrganizationProfileInIdList(List<Long> orgIdList){
+        return organizationProfileRepository.findAllByIdIn(orgIdList);
+    }
 }

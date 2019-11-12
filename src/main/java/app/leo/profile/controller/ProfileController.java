@@ -43,6 +43,10 @@ public class ProfileController {
     @Autowired
     private MatchManagementAdapter matchManagementAdapter;
 
+    private final String APPLICANT_ROLE = "applicant";
+    private final String RECRUITER_ROLE = "recruiter";
+    private final String ORGANIZER_ROLE = "organizer";
+
     @PostMapping("/profile/applicant/create")
     public ResponseEntity<ApplicantProfile> saveApplicantProfile(@Valid @RequestBody ApplicantProfileDTO applicantProfileDTO) {
         ApplicantProfile applicantProfile = modelMapper.map(applicantProfileDTO, ApplicantProfile.class);
@@ -98,13 +102,13 @@ public class ProfileController {
     public ResponseEntity<Long> getProfileIdByUserId(@PathVariable String role, @PathVariable long userId) {
         long result;
         switch (role) {
-            case "applicant":
+            case APPLICANT_ROLE:
                 result = profileService.getApplicantProfileByUserId(userId).getApplicantId();
                 break;
-            case "recruiter":
+            case RECRUITER_ROLE:
                 result = profileService.getRecruiterProfileByUserId(userId).getRecruiterId();
                 break;
-            case "organizer":
+            case ORGANIZER_ROLE:
                 result = profileService.getOrganizationProfileByUserId(userId).getId();
                 break;
             default:
@@ -163,4 +167,19 @@ public class ProfileController {
         return idWrapper.getIdList().isEmpty();
     }
 
+    @GetMapping("profile/organizations")
+    public ResponseEntity<List<OrganizationProfileDTO>> getOrganizationsByUserId(@RequestAttribute("token") String token, @RequestAttribute("user") User user){
+        List<Long>  organizationsOfUser =matchManagementAdapter.getOrganizationsOfUser(user.getProfileId(),token).getIdList();
+        List<OrganizationProfile> organizationProfileList = profileService.getOrganizationProfileInIdList(organizationsOfUser);
+        List<OrganizationProfileDTO> organizationProfileDTOList = mapOrgProfileDTO(organizationProfileList);
+        return new ResponseEntity<>(organizationProfileDTOList,HttpStatus.OK);
+    }
+
+    private List<OrganizationProfileDTO> mapOrgProfileDTO(List<OrganizationProfile> organizationProfileList){
+        List<OrganizationProfileDTO> result = new ArrayList<>();
+        for(OrganizationProfile organizationProfile: organizationProfileList){
+            result.add(modelMapper.map(organizationProfile,OrganizationProfileDTO.class));
+        }
+        return result;
+    }
 }
