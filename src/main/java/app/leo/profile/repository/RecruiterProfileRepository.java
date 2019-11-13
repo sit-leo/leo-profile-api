@@ -1,13 +1,16 @@
 package app.leo.profile.repository;
 
-import app.leo.profile.models.RecruiterProfile;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import app.leo.profile.models.RecruiterProfile;
 
 @Repository
 public interface RecruiterProfileRepository extends JpaRepository<RecruiterProfile,Long> {
+
+    RecruiterProfile findByUserId(long userId);
 
     RecruiterProfile findByRecruiterId(long recruiterId);
 

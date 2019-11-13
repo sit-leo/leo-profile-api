@@ -39,9 +39,9 @@ public class ProfileService {
     public Profile getProfile(long id,String role){
         try {
             if (role.equalsIgnoreCase("recruiter")) {
-                return recruiterProfileRepository.findByRecruiterId(id);
+                return recruiterProfileRepository.findByUserId(id);
             } else if(role.equalsIgnoreCase("applicant")) {
-                return applicantProfileRepository.findByApplicantId(id);
+                return applicantProfileRepository.findByUserId(id);
             } else if(role.equalsIgnoreCase("organizer")) {
                 return organizationProfileRepository.findByUserId(id);
             } else {
