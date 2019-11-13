@@ -53,12 +53,12 @@ public class ProfileService {
         }
     }
 
-    public RecruiterProfile getRecruiterProfileByUserId(long userId) {
-        return recruiterProfileRepository.findByRecruiterId(userId);
+    public RecruiterProfile getRecruiterProfileByRecruiterId(long recruiterId) {
+        return recruiterProfileRepository.findByRecruiterId(recruiterId);
     }
 
-    public ApplicantProfile getApplicantProfileByApplicantId(long userId) {
-        return applicantProfileRepository.findByApplicantId(userId);
+    public ApplicantProfile getApplicantProfileByApplicantId(long applicantId) {
+        return applicantProfileRepository.findByApplicantId(applicantId);
     }
 
     public RecruiterProfile getRecruiterProfileByUserId(long userId) {
