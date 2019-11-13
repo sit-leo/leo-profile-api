@@ -1,6 +1,7 @@
 package app.leo.profile.service;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
@@ -45,6 +46,29 @@ public class DocumentManagementService {
     private void uploadFileToS3bucket(String fileName, File file, String bucketName) {
         amazonS3Client.putObject(new PutObjectRequest(bucketName, fileName, file));
 
+    }
+
+    private void uploadPublicFileToS3bucket(String fileName,File file,String bucketName){
+        amazonS3Client.putObject(new PutObjectRequest(bucketName,fileName,file).withCannedAcl(CannedAccessControlList.PublicRead));
+    }
+
+    public String getLinkOfProfilePicture(String filename){
+        return amazonS3Client.getUrl(bucketName, filename).toExternalForm();
+    }
+
+    public Map<String,String> uploadPicture (MultipartFile multipartFile, String folderName){
+        Map<String,String> name = new HashMap<>();
+        if(multipartFile != null){
+            File file = convertMultiPartFileToFile(multipartFile);
+            String uploadFilename = folderName +  System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
+            uploadPublicFileToS3bucket(uploadFilename,file,bucketName);
+            name.put(multipartFile.getOriginalFilename(),uploadFilename);
+        }
+        return name;
+    }
+
+    public S3Object getPicture(String fileName){
+        return getS3Object(fileName);
     }
 
     public S3ObjectInputStream getObjectInputStream(String fileName){
