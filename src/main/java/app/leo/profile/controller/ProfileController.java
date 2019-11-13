@@ -79,14 +79,14 @@ public class ProfileController {
         return new ResponseEntity<>(profileService.getProfile(user.getId(), user.getRole()), HttpStatus.OK);
     }
 
-    @GetMapping("/profile/{userId}/recruiter")
-    public ResponseEntity<RecruiterProfile> getRecruiterProfile(@PathVariable long userId) {
-        return new ResponseEntity<>(profileService.getRecruiterProfileByUserId(userId), HttpStatus.OK);
+    @GetMapping("/profile/{recruiterId}/recruiter")
+    public ResponseEntity<RecruiterProfile> getRecruiterProfile(@PathVariable long recruiterId) {
+        return new ResponseEntity<>(profileService.getRecruiterProfileByRecruiterId(recruiterId), HttpStatus.OK);
     }
 
-    @GetMapping("/profile/{userId}/applicant")
-    public ResponseEntity<ApplicantProfile> getApplicantProfile(@PathVariable long userId) {
-        return new ResponseEntity<>(profileService.getApplicantProfileByApplicantId(userId), HttpStatus.OK);
+    @GetMapping("/profile/{applicantId}/applicant")
+    public ResponseEntity<ApplicantProfile> getApplicantProfile(@PathVariable long applicantId) {
+        return new ResponseEntity<>(profileService.getApplicantProfileByApplicantId(applicantId), HttpStatus.OK);
     }
 
     @PostMapping("/profile/organizer/create")
