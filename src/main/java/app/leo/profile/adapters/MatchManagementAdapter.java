@@ -2,6 +2,7 @@ package app.leo.profile.adapters;
 
 import app.leo.profile.HttpEntityFactory;
 import app.leo.profile.dto.IdWrapper;
+import app.leo.profile.dto.OrgIdWrapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -31,11 +32,11 @@ public class MatchManagementAdapter {
         return responseEntity.getBody();
     }
 
-    public IdWrapper getOrganizationsOfUser(long profileId,String token){
+    public OrgIdWrapper getOrganizationsOfUser(long profileId,String token){
         RestTemplate restTemplate = new RestTemplate();
         String url = matchManagementAPIUrl + "/user/" + profileId + "/organizations";
         HttpEntity<?> entity = HttpEntityFactory.getHttpEntity(token);
-        ResponseEntity<IdWrapper> responseEntity = restTemplate.exchange(url,HttpMethod.GET,entity,IdWrapper.class);
+        ResponseEntity<OrgIdWrapper> responseEntity = restTemplate.exchange(url,HttpMethod.GET,entity, OrgIdWrapper.class);
         return responseEntity.getBody();
     }
 }

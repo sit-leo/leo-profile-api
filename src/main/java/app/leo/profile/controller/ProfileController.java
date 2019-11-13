@@ -2,9 +2,11 @@ package app.leo.profile.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import app.leo.profile.dto.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,11 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.leo.profile.adapters.MatchManagementAdapter;
-import app.leo.profile.dto.ApplicantProfileDTO;
-import app.leo.profile.dto.IdWrapper;
-import app.leo.profile.dto.OrganizationProfileDTO;
-import app.leo.profile.dto.RecruiterProfileDTO;
-import app.leo.profile.dto.User;
 import app.leo.profile.exceptions.RoleNotExistException;
 import app.leo.profile.exceptions.UserNotExistException;
 import app.leo.profile.models.ApplicantProfile;
@@ -168,17 +165,22 @@ public class ProfileController {
     }
 
     @GetMapping("profile/organizations")
-    public ResponseEntity<List<OrganizationProfileDTO>> getOrganizationsByUserId(@RequestAttribute("token") String token, @RequestAttribute("user") User user){
-        List<Long>  organizationsOfUser =matchManagementAdapter.getOrganizationsOfUser(user.getProfileId(),token).getIdList();
-        List<OrganizationProfile> organizationProfileList = profileService.getOrganizationProfileInIdList(organizationsOfUser);
-        List<OrganizationProfileDTO> organizationProfileDTOList = mapOrgProfileDTO(organizationProfileList);
+    public ResponseEntity<List<GetOrganizationsOfUserResponse>> getOrganizationsByUserId(@RequestAttribute("token") String token, @RequestAttribute("user") User user){
+        List<IdWithNumberOfApplicantAndRecruiter>  organizationsOfUser =matchManagementAdapter.getOrganizationsOfUser(user.getProfileId(),token).getIdList();
+        List<GetOrganizationsOfUserResponse> organizationProfileDTOList = mapOrgProfileDTO(organizationsOfUser);
         return new ResponseEntity<>(organizationProfileDTOList,HttpStatus.OK);
     }
 
-    private List<OrganizationProfileDTO> mapOrgProfileDTO(List<OrganizationProfile> organizationProfileList){
-        List<OrganizationProfileDTO> result = new ArrayList<>();
-        for(OrganizationProfile organizationProfile: organizationProfileList){
-            result.add(modelMapper.map(organizationProfile,OrganizationProfileDTO.class));
+    private List<GetOrganizationsOfUserResponse> mapOrgProfileDTO(List<IdWithNumberOfApplicantAndRecruiter> organizationIdList){
+        List<GetOrganizationsOfUserResponse> result = new ArrayList<>();
+        List<Long> idList =  organizationIdList.parallelStream()
+                .map(IdWithNumberOfApplicantAndRecruiter::getId).collect(Collectors.toList());
+        List<OrganizationProfile> organizationProfileList = profileService.getOrganizationProfileInIdList(idList);
+        for(int i = 0; i<organizationIdList.size(); i++){
+            GetOrganizationsOfUserResponse organizationsOfUserResponse = modelMapper.map(organizationProfileList.get(i),GetOrganizationsOfUserResponse.class);
+            organizationsOfUserResponse.setNumberOfApplicant(organizationIdList.get(i).getNumOfApplicants());
+            organizationsOfUserResponse.setNumberOfRecruiter(organizationIdList.get(i).getNumOfRecruiters());
+            result.add(organizationsOfUserResponse);
         }
         return result;
     }
