@@ -3,6 +3,7 @@ package app.leo.profile.dto;
 
 public class RecruiterProfileDTO{
 
+    private long recruiterId;
     private String name;
     private String description;
     private String email;
@@ -65,5 +66,13 @@ public class RecruiterProfileDTO{
 
     public void setWebsite(String website) {
         this.website = website;
+    }
+
+    public long getRecruiterId() {
+        return recruiterId;
+    }
+
+    public void setRecruiterId(long recruiterId) {
+        this.recruiterId = recruiterId;
     }
 }
