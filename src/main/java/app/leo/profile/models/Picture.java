@@ -13,7 +13,8 @@ public class Picture {
 
     private String name;
     private String genaratedName;
-    private long userId;
+    private String imageURL;
+    private long profileId;
 
     public long getId() {
         return id;
@@ -31,12 +32,12 @@ public class Picture {
         this.name = name;
     }
 
-    public long getUserId() {
-        return userId;
+    public long getProfileId() {
+        return profileId;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setProfileId(long profileId) {
+        this.profileId = profileId;
     }
 
     public String getGenaratedName() {
@@ -45,5 +46,13 @@ public class Picture {
 
     public void setGenaratedName(String genaratedName) {
         this.genaratedName = genaratedName;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 }

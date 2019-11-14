@@ -45,12 +45,12 @@ public class PictureController {
             default:
                 throw new RoleNotExistException("Your role are not in the system");
         }
-        Picture picture = pictureService.uploadPictureToS3(file,folderName,user.getId());
+        Picture picture = pictureService.uploadPictureToS3(file,folderName,user.getProfileId());
         return new ResponseEntity<>(modelMapper.map(picture,PictureDTO.class), HttpStatus.ACCEPTED);
     }
 
     @GetMapping("profile/picture")
     public ResponseEntity<String> getProfilePicture(@RequestAttribute("user") User user){
-        return new ResponseEntity<>(pictureService.getPicture( user.getId()) ,HttpStatus.OK);
+        return new ResponseEntity<>(pictureService.getPicture( user.getProfileId()) ,HttpStatus.OK);
     }
 }

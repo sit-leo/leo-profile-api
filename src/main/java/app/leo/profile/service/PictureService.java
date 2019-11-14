@@ -17,30 +17,32 @@ public class PictureService {
     @Autowired
     private DocumentManagementService documentManagementService;
 
-    public Picture getPictureByUserId(long userId){
-        return pictureRepository.findByUserId(userId);
+    public Picture getPictureByProfileId(long profileId){
+        return pictureRepository.findByProfileId(profileId);
     }
 
     public Picture savePicture(Picture picture){
         return pictureRepository.save(picture);
     }
 
-    public Picture uploadPictureToS3(MultipartFile file,String folderName,long userId){
+    public Picture uploadPictureToS3(MultipartFile file,String folderName,long profileId){
         Map<String,String> nameMap = documentManagementService.uploadPicture(file,folderName);
-        Picture picture = getPictureByUserId(userId);
+        Picture picture = getPictureByProfileId(profileId);
         if(picture == null) {
             picture=new Picture();
         }
         for(Map.Entry<String,String> name: nameMap.entrySet()){
             picture.setName(name.getKey());
             picture.setGenaratedName(name.getValue());
-            picture.setUserId(userId);
+            String url = documentManagementService.getLinkOfProfilePicture(picture.getGenaratedName());
+            picture.setImageURL(url);
+            picture.setProfileId(profileId);
         }
         return pictureRepository.save(picture);
     }
 
-    public String getPicture(long userId){
-        Picture picture = pictureRepository.findByUserId(userId);
+    public String getPicture(long profileId){
+        Picture picture = pictureRepository.findByProfileId(profileId);
         return documentManagementService.getLinkOfProfilePicture(picture.getGenaratedName());
     }
 }
