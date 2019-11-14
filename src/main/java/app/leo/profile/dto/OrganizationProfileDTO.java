@@ -1,11 +1,11 @@
 package app.leo.profile.dto;
 
-public class OrganizationProfileDTO {
+public class OrganizationProfileDTO extends Profile{
 
     private long id;
     private String name;
     private String description;
-    private long userId;
+
 
     public String getName() {
         return name;
@@ -21,14 +21,6 @@ public class OrganizationProfileDTO {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
     }
 
     public long getId() {

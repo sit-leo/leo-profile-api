@@ -1,7 +1,7 @@
 package app.leo.profile.dto;
 
 
-public class RecruiterProfileDTO{
+public class RecruiterProfileDTO extends Profile{
 
     private long recruiterId;
     private String name;
@@ -10,7 +10,6 @@ public class RecruiterProfileDTO{
     private String telNo;
     private String location;
     private String website;
-    private long userId;
 
     public String getName() {
         return name;
@@ -50,14 +49,6 @@ public class RecruiterProfileDTO{
 
     public void setLocation(String location) {
         this.location = location;
-    }
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
     }
 
     public String getWebsite() {

@@ -4,13 +4,17 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import app.leo.profile.dto.ApplicantProfileDTO;
+import app.leo.profile.dto.OrganizationProfileDTO;
+import app.leo.profile.dto.Profile;
+import app.leo.profile.dto.RecruiterProfileDTO;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.leo.profile.exceptions.RoleNotExistException;
 import app.leo.profile.models.ApplicantProfile;
 import app.leo.profile.models.OrganizationProfile;
-import app.leo.profile.models.Profile;
 import app.leo.profile.models.RecruiterProfile;
 import app.leo.profile.repository.ApplicantProfileRepository;
 import app.leo.profile.repository.OrganizationProfileRepository;
@@ -28,6 +32,12 @@ public class ProfileService {
     @Autowired
     private OrganizationProfileRepository organizationProfileRepository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Autowired
+    private PictureService pictureService;
+
     public ApplicantProfile saveApplicantProfile(ApplicantProfile applicantProfile){
         return applicantProfileRepository.save(applicantProfile);
     }
@@ -36,14 +46,22 @@ public class ProfileService {
         return recruiterProfileRepository.save(recruiterProfile);
     }
 
-    public Profile getProfile(long id,String role){
+    public Profile getProfile(long id, String role){
+        Profile profile;
+        long profileId;
         try {
             if (role.equalsIgnoreCase("recruiter")) {
-                return recruiterProfileRepository.findByUserId(id);
+                RecruiterProfile recruiterProfile =  recruiterProfileRepository.findByUserId(id);
+                profileId = recruiterProfile.getRecruiterId();
+                profile = modelMapper.map(recruiterProfile,RecruiterProfileDTO.class);
             } else if(role.equalsIgnoreCase("applicant")) {
-                return applicantProfileRepository.findByUserId(id);
+                ApplicantProfile applicantProfile = applicantProfileRepository.findByUserId(id);
+                profileId = applicantProfile.getApplicantId();
+                profile = modelMapper.map(applicantProfile,ApplicantProfileDTO.class);
             } else if(role.equalsIgnoreCase("organizer")) {
-                return organizationProfileRepository.findByUserId(id);
+                OrganizationProfile organizationProfile =  organizationProfileRepository.findByUserId(id);
+                profileId = organizationProfile.getId();
+                profile = modelMapper.map(organizationProfile,OrganizationProfileDTO.class);
             } else {
                 throw new RoleNotExistException("this role does not have a profile.");
             }
@@ -51,6 +69,8 @@ public class ProfileService {
             System.out.println("No profile");
             return null;
         }
+        profile.setImageURL(pictureService.getPicture(profileId));
+        return profile;
     }
 
     public RecruiterProfile getRecruiterProfileByRecruiterId(long recruiterId) {

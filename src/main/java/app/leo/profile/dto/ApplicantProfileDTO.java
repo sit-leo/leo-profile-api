@@ -2,7 +2,7 @@ package app.leo.profile.dto;
 
 import java.util.List;
 
-public class ApplicantProfileDTO  {
+public class ApplicantProfileDTO extends Profile{
 
     private long applicantId;
     private String firstName;
@@ -11,7 +11,6 @@ public class ApplicantProfileDTO  {
     private String telNo;
     private String experiences;
     private String website;
-    private long userId;
     private List<EducationDTO> educations;
     private List<String> skills;
 
@@ -55,14 +54,6 @@ public class ApplicantProfileDTO  {
         this.experiences = experiences;
     }
 
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
-
     public List<EducationDTO> getEducations() {
         return educations;
     }
@@ -94,4 +85,6 @@ public class ApplicantProfileDTO  {
     public void setApplicantId(long applicantId) {
         this.applicantId = applicantId;
     }
+
+
 }

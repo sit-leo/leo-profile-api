@@ -24,7 +24,6 @@ import app.leo.profile.exceptions.RoleNotExistException;
 import app.leo.profile.exceptions.UserNotExistException;
 import app.leo.profile.models.ApplicantProfile;
 import app.leo.profile.models.OrganizationProfile;
-import app.leo.profile.models.Profile;
 import app.leo.profile.models.RecruiterProfile;
 import app.leo.profile.service.ProfileService;
 
