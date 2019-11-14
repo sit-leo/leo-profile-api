@@ -1,12 +1,13 @@
 package app.leo.profile.service;
 
-import app.leo.profile.models.Picture;
-import app.leo.profile.repository.PictureRepository;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Map;
+import app.leo.profile.models.Picture;
+import app.leo.profile.repository.PictureRepository;
 
 @Service
 public class PictureService {
@@ -43,6 +44,9 @@ public class PictureService {
 
     public String getPicture(long profileId){
         Picture picture = pictureRepository.findByProfileId(profileId);
+        if (picture == null) {
+            return null;
+        }
         return documentManagementService.getLinkOfProfilePicture(picture.getGenaratedName());
     }
 }
