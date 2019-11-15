@@ -4,14 +4,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import app.leo.profile.dto.ApplicantProfileDTO;
-import app.leo.profile.dto.OrganizationProfileDTO;
-import app.leo.profile.dto.Profile;
-import app.leo.profile.dto.RecruiterProfileDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import app.leo.profile.dto.ApplicantProfileDTO;
+import app.leo.profile.dto.OrganizationProfileDTO;
+import app.leo.profile.dto.Profile;
+import app.leo.profile.dto.RecruiterProfileDTO;
 import app.leo.profile.exceptions.RoleNotExistException;
 import app.leo.profile.models.ApplicantProfile;
 import app.leo.profile.models.OrganizationProfile;

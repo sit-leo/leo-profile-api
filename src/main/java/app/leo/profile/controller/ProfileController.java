@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
-import app.leo.profile.dto.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +19,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.leo.profile.adapters.MatchManagementAdapter;
+import app.leo.profile.dto.ApplicantProfileDTO;
+import app.leo.profile.dto.GetOrganizationsOfUserResponse;
+import app.leo.profile.dto.IdWithNumberOfApplicantAndRecruiter;
+import app.leo.profile.dto.IdWrapper;
+import app.leo.profile.dto.OrganizationProfileDTO;
+import app.leo.profile.dto.Profile;
+import app.leo.profile.dto.RecruiterProfileDTO;
+import app.leo.profile.dto.User;
 import app.leo.profile.exceptions.RoleNotExistException;
 import app.leo.profile.exceptions.UserNotExistException;
 import app.leo.profile.models.ApplicantProfile;
@@ -71,6 +78,14 @@ public class ProfileController {
         }
         RecruiterProfile recruiterProfile = modelMapper.map(recruiterProfileDTO, RecruiterProfile.class);
         return new ResponseEntity<>(profileService.saveRecruiterProfile(recruiterProfile), HttpStatus.ACCEPTED);
+    }
+
+    @PutMapping("/profile/organizer")
+    public ResponseEntity<OrganizationProfile> updateOrganizerProfile(@Valid @RequestBody OrganizationProfile organizationProfile) {
+        if (organizationProfile.getId() == 0) {
+            throw new UserNotExistException("This profile does not exist");
+        }
+        return new ResponseEntity<>(profileService.saveOrganizationProfile(organizationProfile), HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/profile")
