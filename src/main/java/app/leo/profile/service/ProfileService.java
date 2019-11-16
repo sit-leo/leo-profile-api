@@ -8,6 +8,8 @@ import app.leo.profile.dto.ApplicantProfileDTO;
 import app.leo.profile.dto.OrganizationProfileDTO;
 import app.leo.profile.dto.Profile;
 import app.leo.profile.dto.RecruiterProfileDTO;
+import app.leo.profile.models.AdminProfile;
+import app.leo.profile.repository.AdminProfileRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,10 +35,17 @@ public class ProfileService {
     private OrganizationProfileRepository organizationProfileRepository;
 
     @Autowired
+    private AdminProfileRepository adminProfileRepository;
+
+    @Autowired
     private ModelMapper modelMapper;
 
     @Autowired
     private PictureService pictureService;
+
+    public AdminProfile saveAdminProfile(AdminProfile adminProfile){
+        return adminProfileRepository.save(adminProfile);
+    }
 
     public ApplicantProfile saveApplicantProfile(ApplicantProfile applicantProfile){
         return applicantProfileRepository.save(applicantProfile);
@@ -128,5 +137,9 @@ public class ProfileService {
 
     public List<OrganizationProfile> getOrganizationProfileInIdList(List<Long> orgIdList){
         return organizationProfileRepository.findAllByIdIn(orgIdList);
+    }
+
+    public AdminProfile getAdminProfileById(long id){
+        return adminProfileRepository.findById(id).get();
     }
 }

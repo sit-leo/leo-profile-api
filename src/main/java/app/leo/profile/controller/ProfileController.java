@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import app.leo.profile.dto.*;
+import app.leo.profile.models.AdminProfile;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -183,4 +184,21 @@ public class ProfileController {
         }
         return result;
     }
-}
+
+    @PostMapping("/profile/admin/create")
+    public ResponseEntity<AdminProfileDTO> createAdminProfile(@RequestBody @Valid AdminProfileDTO adminProfileDTO){
+        AdminProfile adminProfile = modelMapper.map(adminProfileDTO,AdminProfile.class);
+        adminProfileDTO = modelMapper.map(profileService.saveAdminProfile(adminProfile),AdminProfileDTO.class);
+        return new ResponseEntity<>(adminProfileDTO,HttpStatus.ACCEPTED);
+    }
+
+    @PutMapping("profile/admin")
+    public ResponseEntity<AdminProfileDTO> updateAdminProfile(@RequestBody @Valid AdminProfileDTO adminProfileDTO){
+        if(0 == adminProfileDTO.getId())
+            throw new NullPointerException("Profile doesn't exist");
+        AdminProfile adminProfile = profileService.getAdminProfileById(adminProfileDTO.getId());
+        adminProfile = modelMapper.map(adminProfileDTO,AdminProfile.class);
+        adminProfileDTO = modelMapper.map(profileService.saveAdminProfile(adminProfile),AdminProfileDTO.class);
+        return new ResponseEntity<>(adminProfileDTO,HttpStatus.ACCEPTED);
+    }
+ }
