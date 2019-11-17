@@ -13,6 +13,7 @@ public class ApplicantProfileDTO extends Profile{
     private String website;
     private List<EducationDTO> educations;
     private List<String> skills;
+    private String pictureUrl;
 
     public String getFirstName() {
         return firstName;
@@ -86,5 +87,11 @@ public class ApplicantProfileDTO extends Profile{
         this.applicantId = applicantId;
     }
 
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
 
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
+    }
 }

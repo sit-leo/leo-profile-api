@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import app.leo.profile.dto.*;
 import app.leo.profile.models.AdminProfile;
+import app.leo.profile.service.PictureService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,6 +48,9 @@ public class ProfileController {
 
     @Autowired
     private MatchManagementAdapter matchManagementAdapter;
+
+    @Autowired
+    private PictureService pictureService;
 
     private final String APPLICANT_ROLE = "applicant";
     private final String RECRUITER_ROLE = "recruiter";
@@ -102,8 +106,11 @@ public class ProfileController {
     }
 
     @GetMapping("/profile/{applicantId}/applicant")
-    public ResponseEntity<ApplicantProfile> getApplicantProfile(@PathVariable long applicantId) {
-        return new ResponseEntity<>(profileService.getApplicantProfileByApplicantId(applicantId), HttpStatus.OK);
+    public ResponseEntity<ApplicantProfileDTO> getApplicantProfile(@PathVariable long applicantId) {
+        ApplicantProfileDTO applicantProfileDTO = modelMapper.map(profileService.getApplicantProfileByApplicantId(applicantId),ApplicantProfileDTO.class);
+        String url = pictureService.getPictureByProfileId(applicantId).getImageURL();
+        applicantProfileDTO.setPictureUrl(url);
+        return new ResponseEntity<>(applicantProfileDTO, HttpStatus.OK);
     }
 
     @PostMapping("/profile/organizer/create")
