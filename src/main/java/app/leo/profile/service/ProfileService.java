@@ -142,4 +142,8 @@ public class ProfileService {
     public AdminProfile getAdminProfileById(long id){
         return adminProfileRepository.findById(id).get();
     }
+
+    public AdminProfile getAdminProfileByUserId(long userId){
+        return adminProfileRepository.findByUserId(userId);
+    }
 }

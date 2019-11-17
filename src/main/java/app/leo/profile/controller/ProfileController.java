@@ -51,6 +51,7 @@ public class ProfileController {
     private final String APPLICANT_ROLE = "applicant";
     private final String RECRUITER_ROLE = "recruiter";
     private final String ORGANIZER_ROLE = "organizer";
+    private final String ADMIN_ROLE = "admin";
 
     @PostMapping("/profile/applicant/create")
     public ResponseEntity<ApplicantProfile> saveApplicantProfile(@Valid @RequestBody ApplicantProfileDTO applicantProfileDTO) {
@@ -123,6 +124,9 @@ public class ProfileController {
                 break;
             case ORGANIZER_ROLE:
                 result = profileService.getOrganizationProfileByUserId(userId).getId();
+                break;
+            case ADMIN_ROLE:
+                result = profileService.getAdminProfileByUserId(userId).getId();
                 break;
             default:
                 throw new RoleNotExistException("Your role isn't existed");

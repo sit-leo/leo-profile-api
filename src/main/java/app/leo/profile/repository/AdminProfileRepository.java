@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AdminProfileRepository extends JpaRepository<AdminProfile,Long>{
+
+    AdminProfile findByUserId(long userId);
 }
