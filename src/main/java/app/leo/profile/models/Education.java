@@ -3,6 +3,7 @@ package app.leo.profile.models;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.annotations.Cascade;
 
 @Entity
 public class Education {
@@ -14,7 +15,7 @@ public class Education {
     private String major;
     private String gpax;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "applicant_id")
     @JsonBackReference
     private ApplicantProfile applicantProfile;
